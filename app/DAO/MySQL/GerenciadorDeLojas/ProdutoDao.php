@@ -1,12 +1,31 @@
 <?php
 
 namespace App\Dao\MySQL\GerenciadorDeLojas;
+use App\Models\MySQL\GerenciadorDeLojas\ProdutoModel;
 
 class ProdutoDao extends Conexao{
 	
 	public function __construct(){
 		
 		parent::__construct();
+		
+	}
+	
+	public function getAllProdutos(): array{
+		
+		$produtos = $this->pdo->query('SELECT * FROM produto')->fetchAll(\PDO::FETCH_ASSOC);
+		
+		return $produtos;
+	}
+	
+	public function insertProduto(ProdutoModel $prod):void{
+		$stmt = $this->pdo->prepare('INSERT INTO produto VALUES(null, :loja_id, :nome, :preco, :quantidade);');
+		$stmt->execute([
+			"loja_id"=>$prod->getLojaId(),
+			"nome"=>$prod->getNome(),
+			"preco"=>$prod->getPreco(),
+			"quantidade"=>$prod->getQuantidade()
+			]);
 		
 	}
 }
