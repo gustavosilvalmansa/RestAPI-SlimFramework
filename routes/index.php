@@ -26,7 +26,7 @@ $app->group('', function() use ($app){
 $app->run();
 
 
-/* /omments about SlimASpp
+/* comments about SlimASpp
 
 ## Duas funções funcionam igual ## 
 $app->get('/', '\App\Controllers\ProductController:getProducts');
