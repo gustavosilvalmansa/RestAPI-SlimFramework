@@ -26,8 +26,15 @@ class ProdutoDao extends Conexao{
 			"preco"=>$prod->getPreco(),
 			"quantidade"=>$prod->getQuantidade()
 			]);
-		
 	}
+	
+	public function deleteProduto(int $id):void{
+		$stmt = $this->pdo->prepare('DELETE FROM produto where id=:id');
+		$stmt->execute([
+			"id"=>$id
+		]);
+	}
+	
 }
 
 ?>

@@ -48,6 +48,16 @@ final class ProductController{ // Final class ngm herda
 	
 	public function deleteProduto(Request $request, Response $response, array $args): Response{
 		
+		$data = $request->getParsedBody();
+		
+		$prodDao = new ProdutoDao();
+		$prodDao->deleteProduto($data['prodId']);
+		
+		$response = $response->withJson([
+			"message"=>"Produto Excluido com sucesso"
+		]);
+		
+
 		return $response;		
 		
 	}
