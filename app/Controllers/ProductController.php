@@ -43,6 +43,21 @@ final class ProductController{ // Final class ngm herda
 	
 	public function updateProduto(Request $request, Response $response, array $args): Response{
 		
+		$data = $request->getParsedBody();
+		
+		$prodDao = new ProdutoDao();
+		$prod = new ProdutoModel();
+		
+		$prod->setLojaId($data['lojaId'])
+		->setNome($data['nome'])
+		->setPreco($data['preco'])
+		->setQuantidade($data['quantidade']);   
+		$prodDao->updateProduto($data['id'], $prod);
+		
+		$response = $response->withJson([
+			"MESSAGE"=>"Cadastro de produto atualizado"
+		]);
+		
 		return $response;
 	}
 	

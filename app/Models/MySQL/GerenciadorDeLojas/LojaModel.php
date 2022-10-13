@@ -33,12 +33,10 @@ final class LojaModel{
 	public function setTelefone(string $telefone): LojaModel{
 		$this->telefone=$telefone;
 		return $this;
-
 	}
 	public function setEndereco(string $endereco): LojaModel{
 		$this->endereco=$endereco;
 		return $this;
-
 	}
 }
 

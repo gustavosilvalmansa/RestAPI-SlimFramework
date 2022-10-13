@@ -43,12 +43,10 @@ final class ProdutoModel{
 	public function setPreco(float $preco): ProdutoModel{
 		$this->preco=$preco;
 		return $this;
-
 	}
 	public function setQuantidade(int $quantidade): ProdutoModel{
 		$this->quantidade=$quantidade;
 		return $this;
-
 	}
 }
 

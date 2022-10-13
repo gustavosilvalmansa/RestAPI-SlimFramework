@@ -27,6 +27,17 @@ class ProdutoDao extends Conexao{
 			"quantidade"=>$prod->getQuantidade()
 			]);
 	}
+
+	public function updateProduto(int $id, ProdutoModel $prod):void{
+		$stmt = $this->pdo->prepare('UPDATE produto SET loja_id = :loja_id, nome = :nome, preco = :preco, quantidade = :quantidade WHERE id = :id');
+		$stmt->execute([
+			"id"=>$id,
+			"loja_id"=>$prod->getLojaId(),
+			"nome"=>$prod->getNome(),
+			"preco"=>$prod->getPreco(),
+			"quantidade"=>$prod->getQuantidade()
+			]);
+	}
 	
 	public function deleteProduto(int $id):void{
 		$stmt = $this->pdo->prepare('DELETE FROM produto where id=:id');
