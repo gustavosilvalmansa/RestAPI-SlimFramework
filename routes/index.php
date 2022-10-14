@@ -1,13 +1,22 @@
 <?php
 
-use function src\{slimConfiguration,basicAuth}; // Disponivel a partir do PHP 7.4, se utilizar versão inferior: Separe as classes
-use App\Controllers\ProductController;
-use App\Controllers\LojaController;
-use Tuupola\Middleware\HttpBasicAuthentication;
-
+// Disponivel a partir do PHP 7.4, se utilizar versão inferior: Separe as classes
+use function src\{
+	slimConfiguration,
+	basicAuth
+	}; 
+	
+use App\Controllers\{
+	ProductController,
+	LojaController,
+	AuthController
+	};
+	
 $app = new \Slim\App(slimConfiguration());
 
 // Workspace
+$app->post('/login', AuthController::class . ':login');
+
  //Rotas agrupadas sem rota pai definida
 $app->group('', function() use ($app){
 	$app->get('/loja' , LojaController::class . ':getLojas');	
@@ -26,8 +35,14 @@ $app->group('', function() use ($app){
 $app->run();
 
 
-/* comments about SlimASpp
+/* PHP
+//use App\Controllers\ProductController;
+//use App\Controllers\LojaController;
+//use App\Controllers\AuthController;
+//use Tuupola\Middleware\HttpBasicAuthentication;
 
+
+comments about SlimASpp
 ## Duas funções funcionam igual ## 
 $app->get('/', '\App\Controllers\ProductController:getProducts');
 $app->get('/', ProductController::class . ':getProducts');  ProductController:class retorna string com namespace e classe
