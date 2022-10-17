@@ -4,8 +4,10 @@ namespace App\Controllers;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use App\Dao\MySQL\GerenciadorDeLojas\UsuariosDao;
-use App\Models\MySQL\GerenciadorDeLojas\UsuarioModel;
+use App\Dao\MySQL\GerenciadorDeLojas\{UsuariosDao,TokenDao};
+//use App\Models\MySQL\GerenciadorDeLojas\UsuarioModel;
+use App\Models\MySQL\GerenciadorDeLojas\{TokenModel,UsuarioModel};
+
 use Firebase\JWT\JWT;
 
 final class AuthController{ // Ngm herda
@@ -15,6 +17,7 @@ final class AuthController{ // Ngm herda
 		
 		$email = $data["email"];
 		$senha = $data["senha"];
+		$expiredDate = $data["expiracao"];
 		
 		$usuarioDao = new UsuariosDao();
 		$usuario = $usuarioDao->getUserByEmail($email);
@@ -27,11 +30,13 @@ final class AuthController{ // Ngm herda
 			return $response->withStatus(401);
 		}
 		
+		//$expired_at = (new \DateTime())->modify('+ 2 days')->format('Y-m-d H:i:s');
+		
 		$tokenPayLoad = [
 			'sub'=>$usuario->getId(),
 			'name'=>$usuario->getNome(),
 			'email'=>$usuario->getEmail(),
-			'expired_at'=>(new \DateTime())->modify('+ 2 days')->format('Y-m-d H:i:s')
+			'expired_at'=>$expiredDate
 		];
 		
 		$token = JWT::encode($tokenPayLoad, getenv('JWT_SECRET_KEY'));
@@ -41,7 +46,20 @@ final class AuthController{ // Ngm herda
 		];
 		$refreshToken = JWT::encode($refreshTokenPayload, getenv('JWT_SECRET_KEY'));
 		
-		var_dump($token);
+		$tokenModel = new TokenModel();
+		$tokenModel->setExpiredAt($expiredDate)
+		->setRefreshToken($refreshToken)
+		->setToken($token)
+		->setUsuariosId($usuario->getId());
+		
+		$TokenDao = new TokenDao();
+		$TokenDao->createToken($tokenModel);
+		
+		$response = $response->withJson([
+			"token"=>$token,
+			"refresh_token"=>$refreshToken
+		]);
+		
 		return $response;
 	}
 
