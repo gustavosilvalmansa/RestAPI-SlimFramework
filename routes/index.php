@@ -22,6 +22,8 @@ $app = new \Slim\App(slimConfiguration());
 $app->post('/login', AuthController::class . ':login');
 $app->post('/refresh_token', AuthController::class . ':refreshToken');
 
+//$app->get('/refresh_token', AuthController::class . ':refreshToken')->add(jwtAuth());
+
 
 $app->get('/teste', function(){echo "oi";})
 	->add(new JwtDateTimeMiddleware())
