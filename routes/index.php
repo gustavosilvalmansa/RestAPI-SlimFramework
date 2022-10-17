@@ -3,7 +3,8 @@
 // Disponivel a partir do PHP 7.4, se utilizar versão inferior: Separe as classes
 use function src\{
 	slimConfiguration,
-	basicAuth
+	basicAuth,
+	jwtAuth
 	}; 
 	
 use App\Controllers\{
@@ -12,10 +13,19 @@ use App\Controllers\{
 	AuthController
 	};
 	
+use App\Middleware\JwtDateTimeMiddleware;
+use Tuupola\Middleware\JwtAuthentication;
+
 $app = new \Slim\App(slimConfiguration());
 
 // Workspace
 $app->post('/login', AuthController::class . ':login');
+$app->post('/refresh_token', AuthController::class . ':refreshToken');
+
+
+$app->get('/teste', function(){echo "oi";})
+	->add(new JwtDateTimeMiddleware())
+	->add(jwtAuth());
 
  //Rotas agrupadas sem rota pai definida
 $app->group('', function() use ($app){
