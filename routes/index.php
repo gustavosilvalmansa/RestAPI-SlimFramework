@@ -21,6 +21,12 @@ $app = new \Slim\App(slimConfiguration());
 
 // Workspace
 
+$app->group('/v1', function () use($app){
+	$app->get('/teste-with-versions', function(){return "oi v1";});
+});
+$app->group('/v2', function () use($app){
+	$app->get('/teste-with-versions', function(){return "oi v2";});
+});
 $app->get('/exception-teste', ExceptionController::class . ':test');
 $app->post('/login', AuthController::class . ':login');
 $app->post('/refresh_token', AuthController::class . ':refreshToken');
@@ -47,6 +53,7 @@ $app->group('', function() use ($app){
 })->add(basicAuth());
 
 //End  of worspace
+
 $app->run();
 
 
