@@ -14,12 +14,12 @@ final class ExceptionController{ // Ngm herda
 		throw new \Exception("Mensagem de erro.");
 		return $response->withJson(['msg'=>'Ok']);
 
-		} catch(\Exception and \Throwable $ex){
-			return $response-withJson([
+		} catch(\Exception | \Throwable $ex){
+			return $response->withJson([
 				"error"=>\Exception::class,
 				"status"=>500,
-				"code"=> "001"
-				"userMessage"=>"Erro na aplicação, entre em contato com o administrador do sistema"
+				"code"=> "001",
+				"userMessage"=>"Erro na aplicação, entre em contato com o administrador do sistema",
 				"developerMessage" => $ex->getMessage()
 			], 500);
 		}
