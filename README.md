@@ -1,6 +1,6 @@
-# SlimRestAPI
+# Como utilizar:
 
-Abre o arquivo env.php e preencha com as informações necessárias.
+Abra o arquivo env.php e preencha com as informações necessárias.
 
 Rode no terminal composer install ou php composer.phar install dependendo de como você usa o composer.
 
