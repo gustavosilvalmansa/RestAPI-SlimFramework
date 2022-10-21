@@ -7,6 +7,6 @@ Rode no terminal composer install ou php composer.phar install dependendo de com
 Use os códigos no diretório db/ para criar o seu banco de dados trabalhando com o MySQL.
 
 # Tecnlogias
-<li> SlimFramework </li>
+<li> SlimFramework 3.0</li>
 <li> PHP 7.4 </li>
 <li> MySQL </li>
